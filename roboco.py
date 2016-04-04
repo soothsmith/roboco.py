@@ -6,18 +6,19 @@ directories and or sub-directories in restart or backup mode.
 import os
 import sys
 from Tkinter import *
+from tkFileDialog import askdirectory
 
 class App(object):
 
 	def __init__(self, master):
-		
+
 		frame = Frame(master)
 		frame.pack(expand=YES)
 		# buttons
 		self.source_button = Button(frame, text='...', 
-			command=self.source())
+			command=self.get_dir)
 		self.destination_button = Button(frame, text='...',
-			command=self.destination())
+			command=self.get_dir)
 		self.cancel_button = Button(frame, text='Cancel', command=frame.quit)
 		self.copy_button = Button(frame, text='Copy', command=self.copy())
 		self.source_button.grid(row=0, column=2, sticky=W, ipadx=3)
@@ -43,7 +44,10 @@ class App(object):
 
 		# labels
 		Label(frame, text='Source Directory').grid(row=0, sticky=W)
-		Label(frame, text='Desitnation Directory').grid(row=1, sticky=W)
+		Label(frame, text='Destination Directory').grid(row=1, sticky=W)
+
+	def get_dir(self):
+		return askdirectory(mustexist=True, title='Select Directory')
 
 	def build_cmd(self):
 		# get variable from entries and checks, format into a robocopy
@@ -69,4 +73,4 @@ if __name__ == '__main__':
 	root = Tk()
 	app = App(root)
 	root.mainloop()
-	# root.destroy()
+	root.destroy()
