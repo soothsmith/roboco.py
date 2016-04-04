@@ -49,12 +49,14 @@ class App(object):
 	def get_source_dir(self):
 		source_dir = askdirectory(mustexist=True, 
 			title='Select Source Directory')
+		self.source.delete(0, len(self.source.get()))
 		self.source.insert(0, source_dir)
 		return source_dir
 
 	def get_dest_dir(self):
 		dest_dir = askdirectory(mustexist=True, 
 			title='Select Destinatoin Directory')
+		self.destination.delete(0, len(self.destination.get()))
 		self.destination.insert(0, dest_dir)
 		return dest_dir
 
