@@ -4,7 +4,7 @@ directories and or sub-directories in restart or backup mode.
 """
 
 import os
-import sys
+from subprocess import call
 from Tkinter import *
 from tkFileDialog import askdirectory
 
@@ -33,8 +33,8 @@ class App(object):
 		self.destination.grid(row=1, column=1, sticky=E, ipady=2)
 
 		# checks
-		self.rec_var = IntVar()
-		self.restart_var = IntVar()
+		self.rec_var = BooleanVar()
+		self.restart_var = BooleanVar()
 		self.recurse = Checkbutton(frame, text='Copy Sub-Directories', 
 			variable=self.rec_var) # /e
 		self.restart = Checkbutton(frame, text='Restart Mode', 
@@ -50,37 +50,38 @@ class App(object):
 		source_dir = askdirectory(mustexist=True, 
 			title='Select Source Directory')
 		self.source.delete(0, len(self.source.get()))
-		self.source.insert(0, source_dir)
+		self.source.insert(0, 
+			str('"{}"').replace('/', '\\').format(source_dir))
 		return source_dir
 
 	def get_dest_dir(self):
 		dest_dir = askdirectory(mustexist=True, 
 			title='Select Destinatoin Directory')
 		self.destination.delete(0, len(self.destination.get()))
-		self.destination.insert(0, dest_dir)
+		self.destination.insert(0, 
+			str('"{}"').replace('/', '\\').format(dest_dir))
 		return dest_dir
 
 	def get_args(self):
-		# if recurs, backup do x
-		# elif r do Y
-		# elif x do z
-		# else pass
-		pass
+		r = self.rec_var.get()
+		b = self.restart_var.get()
+		if r and not b:
+			return r'/e'
+		elif b and not r:
+			return r'/zb'
+		elif r and b:
+			return r'/e /zb'
+		else:
+			return ''
 
 	def build_cmd(self):
-		# cmd = 'robocopy {0} {1} {2}'.format(self.source.get(), 
-			# self.destination.get(), self.get_args())
-		# get variable from entries and checks, format into a robocopy
-		# command, return a string
-		# 'robocopy {0} {1} {2}{3}'.format(source, destination, subs, res)
-		pass
+		cmd = 'robocopy {0} {1} {2}'.format(self.source.get(), 
+			self.destination.get(), self.get_args())
+		return cmd
 
 	def copy(self):
-		print 'Copy'
-		# command = self.build_cmd()
-		# sys.execute_command(command)
-
-
+		call(self.build_cmd())
+		
 if __name__ == '__main__':
 	root = Tk()
 	app = App(root)
