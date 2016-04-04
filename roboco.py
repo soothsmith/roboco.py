@@ -20,7 +20,7 @@ class App(object):
 		self.destination_button = Button(frame, text='...',
 			command=self.get_dest_dir)
 		self.cancel_button = Button(frame, text='Cancel', command=frame.quit)
-		self.copy_button = Button(frame, text='Copy', command=self.copy())
+		self.copy_button = Button(frame, text='Copy', command=self.copy)
 		self.source_button.grid(row=0, column=2, sticky=W, ipadx=3)
 		self.destination_button.grid(row=1, column=2, sticky=W, ipadx=3)
 		self.cancel_button.grid(row=5, column=0, sticky=E, ipadx=10)
@@ -60,24 +60,25 @@ class App(object):
 		self.destination.insert(0, dest_dir)
 		return dest_dir
 
+	def get_args(self):
+		# if recurs, backup do x
+		# elif r do Y
+		# elif x do z
+		# else pass
+		pass
+
 	def build_cmd(self):
+		# cmd = 'robocopy {0} {1} {2}'.format(self.source.get(), 
+			# self.destination.get(), self.get_args())
 		# get variable from entries and checks, format into a robocopy
 		# command, return a string
 		# 'robocopy {0} {1} {2}{3}'.format(source, destination, subs, res)
 		pass
 
-	def source(self):
-		# open explorer, pass directory to entry
-		pass
-
-	def destination(self):
-		# open explorer, pass directory to entry
-		pass
-
 	def copy(self):
+		print 'Copy'
 		# command = self.build_cmd()
 		# sys.execute_command(command)
-		pass
 
 
 if __name__ == '__main__':
