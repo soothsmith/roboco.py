@@ -16,9 +16,9 @@ class App(object):
 		frame.pack(expand=YES)
 		# buttons
 		self.source_button = Button(frame, text='...', 
-			command=self.get_dir)
+			command=self.get_source_dir)
 		self.destination_button = Button(frame, text='...',
-			command=self.get_dir)
+			command=self.get_dest_dir)
 		self.cancel_button = Button(frame, text='Cancel', command=frame.quit)
 		self.copy_button = Button(frame, text='Copy', command=self.copy())
 		self.source_button.grid(row=0, column=2, sticky=W, ipadx=3)
@@ -26,7 +26,7 @@ class App(object):
 		self.cancel_button.grid(row=5, column=0, sticky=E, ipadx=10)
 		self.copy_button.grid(row=5, column=1, sticky=W, ipadx=10)
 
-		# bars
+		# entry
 		self.source = Entry(frame)
 		self.destination = Entry(frame)
 		self.source.grid(row=0, column=1, sticky=E, ipady=2)
@@ -46,8 +46,17 @@ class App(object):
 		Label(frame, text='Source Directory').grid(row=0, sticky=W)
 		Label(frame, text='Destination Directory').grid(row=1, sticky=W)
 
-	def get_dir(self):
-		return askdirectory(mustexist=True, title='Select Directory')
+	def get_source_dir(self):
+		source_dir = askdirectory(mustexist=True, 
+			title='Select Source Directory')
+		self.source.insert(0, source_dir)
+		return source_dir
+
+	def get_dest_dir(self):
+		dest_dir = askdirectory(mustexist=True, 
+			title='Select Destinatoin Directory')
+		self.destination.insert(0, dest_dir)
+		return dest_dir
 
 	def build_cmd(self):
 		# get variable from entries and checks, format into a robocopy
