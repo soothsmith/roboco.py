@@ -51,7 +51,7 @@ class App(object):
 			title='Select Source Directory')
 		self.source.delete(0, len(self.source.get()))
 		self.source.insert(0, 
-			str('"{}"').replace('/', '\\').format(source_dir))
+			str('"{}"').format(source_dir.replace('/', '\\')))
 		return source_dir
 
 	def get_dest_dir(self):
@@ -59,7 +59,8 @@ class App(object):
 			title='Select Destinatoin Directory')
 		self.destination.delete(0, len(self.destination.get()))
 		self.destination.insert(0, 
-			str('"{}"').replace('/', '\\').format(dest_dir))
+			str('"{0}\\{1}"').format(dest_dir.replace('/', '\\'),
+				os.path.basename(self.source.get().replace('"', ''))))
 		return dest_dir
 
 	def get_args(self):
