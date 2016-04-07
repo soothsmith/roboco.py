@@ -11,12 +11,12 @@ from tkFileDialog import askdirectory
 class App(object):
 
 	def __init__(self, master):
-
-		frame = Frame(master)
-		frame.pack(expand=YES)
+		frame = Frame(master, width=700, height=500)
+		# frame.pack(expand=YES)
+		frame.grid(sticky=N+S+E+W)
+		frame.grid_columnconfigure(0, weight=1)
 		# buttons
-		self.source_button = Button(frame, text='...', 
-			command=self.get_source_dir)
+		self.source_button = Button(frame, text='...', 			command=self.get_source_dir)
 		self.destination_button = Button(frame, text='...',
 			command=self.get_dest_dir)
 		self.cancel_button = Button(frame, text='Cancel', command=frame.quit)
@@ -29,8 +29,8 @@ class App(object):
 		# entry
 		self.source = Entry(frame)
 		self.destination = Entry(frame)
-		self.source.grid(row=0, column=1, sticky=E, ipady=2)
-		self.destination.grid(row=1, column=1, sticky=E, ipady=2)
+		self.source.grid(row=0, column=1, sticky=E+W, ipady=2)
+		self.destination.grid(row=1, column=1, sticky=E+W, ipady=2)
 
 		# checks
 		self.rec_var = BooleanVar()
