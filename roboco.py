@@ -85,6 +85,7 @@ class App(object):
 		
 if __name__ == '__main__':
 	root = Tk()
+	root.wm_title('Roboco.py - A robocopy GUI')
 	app = App(root)
 	root.mainloop()
 	root.destroy()
